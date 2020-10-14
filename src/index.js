@@ -1,14 +1,21 @@
+const cors = require('cors')
 const express = require('express')
+const bodyParser = require('body-parser')
 const compression = require('compression')
+
+const userControllers = require('./user/controllers')
+const makeExpressCallback = require('./helpers/express-callback')
 
 const app = express()
 app.disable('x-powered-by')
 
+app.use(cors())
 app.use(compression())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
 
-app.get('*', (res, req) => {
-  req.send('Power by express')
-})
+app.post('/sign-up', makeExpressCallback(userControllers.signUp))
+app.post('/sign-in', makeExpressCallback(userControllers.signIn))
 
 const SERVER_PORT = 8090
 app.listen(SERVER_PORT, () => {
