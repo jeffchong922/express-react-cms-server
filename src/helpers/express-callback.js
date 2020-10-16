@@ -6,7 +6,8 @@ module.exports = function makeExpressCallback (controller, TokenValidator = null
 
     let tokenPayload = null
     try {
-      tokenPayload = TokenValidator && TokenValidator.getPayload(token)
+      tokenPayload = TokenValidator && TokenValidator.getPayload(token.split(' ').pop())
+      logger.info(`当前 token 获取的信息 : ${JSON.stringify(tokenPayload, null, 2)}`)
     } catch (e) {
       return res.status(403).send({ error: e.message })
     }
