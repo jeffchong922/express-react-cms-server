@@ -3,6 +3,8 @@ const Id = require("../../helpers/id");
 module.exports = function makeUsersDb ({ makeDb, colName }) {
   return Object.freeze({
     insert,
+    findAll,
+    findById,
     findByName
   })
 
@@ -17,6 +19,44 @@ module.exports = function makeUsersDb ({ makeDb, colName }) {
       id,
       ...insertedInfo
     }
+  }
+
+  async function findAll ({ belongerId, pageNumber, pageSize }) {
+    const db = await makeDb()
+    const query = {
+      'belonger.id': {
+        $eq: belongerId
+      }
+    }
+    const result = await db.collection(colName).find(query).toArray()
+    const total = result.length
+
+    if (total <= 0) {
+      return {
+        list: [],
+        total: 0
+      }
+    }
+
+    // 数据处理
+    const list = result.slice(pageSize * (pageNumber - 1), pageSize * pageNumber)
+    return {
+      list,
+      total
+    }
+  }
+
+  async function findById ({ id: _id }) {
+    const db = await makeDb()
+    const result = await db.collection(colName).findOne({ _id })
+    if (result) {
+      const { _id: id, ...departmentInfo } = result
+      return {
+        id,
+        ...departmentInfo
+      }
+    }
+    return null
   }
 
   async function findByName ({ name, belongerId }) {
