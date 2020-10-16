@@ -39,7 +39,13 @@ module.exports = function makeUsersDb ({ makeDb, colName }) {
     }
 
     // 数据处理
-    const list = result.slice(pageSize * (pageNumber - 1), pageSize * pageNumber)
+    const list = result.slice(pageSize * (pageNumber - 1), pageSize * pageNumber).map(department => {
+      const { _id: id, ...departmentInfo } = department
+      return {
+        id,
+        ...departmentInfo
+      }
+    })
     return {
       list,
       total
