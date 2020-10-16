@@ -1,12 +1,13 @@
 module.exports = function buildMakeDepartment ({
-  Id
+  Id, makeBelonger
 }) {
   return function makeDepartment ({
     id = Id.makeId(),
     name,
     memberCount = 0,
     status = true,
-    introduction
+    introduction,
+    belonger
   }) {
     
     if (!Id.isValidId(id)) {
@@ -28,10 +29,13 @@ module.exports = function buildMakeDepartment ({
     if (!introduction) {
       throw new Error('部门数据缺少 introduction 字段')
     }
+
+    const validBelonger = makeBelonger(belonger)
     
     return Object.freeze({
       getIntroduction: () => introduction,
       getMemberCount: () => memberCount,
+      getBelonger: () => validBelonger,
       getStatus: () => status,
       getName: () => name,
       getId: () => id

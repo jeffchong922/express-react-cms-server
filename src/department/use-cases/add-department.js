@@ -4,8 +4,9 @@ const makeDepartment = require('../index');
 module.exports = function makeAddDepartment ({ departmentsDb }) {
   return async function addDepartment (departmentInfo) {
     const department = makeDepartment(departmentInfo)
+    const belonger = department.getBelonger()
 
-    const exist = await departmentsDb.findByName({ name: department.getName() })
+    const exist = await departmentsDb.findByName({ name: department.getName(), belongerId: belonger.getId() })
     if (exist) {
       const error = new Error('部门已注册')
       error.statusCode = 409
@@ -14,6 +15,10 @@ module.exports = function makeAddDepartment ({ departmentsDb }) {
 
     const inserted = await departmentsDb.insert({
       id: department.getId(),
+      belonger: {
+        id: belonger.getId(),
+        username: belonger.getUsername()
+      },
       name: department.getName(),
       status: department.getStatus(),
       memberCount: department.getMemberCount(),

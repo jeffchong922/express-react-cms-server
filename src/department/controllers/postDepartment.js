@@ -7,7 +7,9 @@ module.exports = function makePostDepartment ({ addDepartment }) {
     }
     try {
       const departmentInfo = httpRequest.body
-      const inserted = await addDepartment(departmentInfo)
+      const payload = httpRequest.tokenPayload
+      const mergeData = Object.assign({}, departmentInfo, { belonger: payload })
+      const inserted = await addDepartment(mergeData)
       return {
         headers,
         statusCode: 200,

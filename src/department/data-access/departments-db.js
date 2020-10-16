@@ -19,9 +19,15 @@ module.exports = function makeUsersDb ({ makeDb, colName }) {
     }
   }
 
-  async function findByName ({ name }) {
+  async function findByName ({ name, belongerId }) {
     const db = await makeDb()
-    const result = await db.collection(colName).findOne({ name })
+    const query = {
+      name,
+      'belonger.id': {
+        $eq: belongerId
+      }
+    }
+    const result = await db.collection(colName).findOne(query)
     if (result) {
       const { _id: id, ...departmentInfo } = result
       return {
