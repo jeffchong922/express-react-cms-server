@@ -3,6 +3,7 @@ const Id = require("../../helpers/id");
 module.exports = function makeUsersDb ({ makeDb, colName }) {
   return Object.freeze({
     insert,
+    remove,
     findAll,
     findById,
     findByName
@@ -19,6 +20,12 @@ module.exports = function makeUsersDb ({ makeDb, colName }) {
       id,
       ...insertedInfo
     }
+  }
+
+  async function remove ({ id: _id }) {
+    const db = await makeDb()
+    const result = await db.collection(colName).deleteOne({ _id })
+    return result
   }
 
   async function findAll ({ belongerId, pageNumber, pageSize }) {

@@ -21,6 +21,7 @@ app.post('/sign-in', makeExpressCallback(userControllers.signIn))
 
 app.post('/departments', makeExpressCallback(departmentControllers.postDepartment, Token))
 app.get('/departments', makeExpressCallback(departmentControllers.getDepartments, Token))
+app.delete('/departments', makeExpressCallback(departmentControllers.deleteDepartment, Token))
 
 const SERVER_PORT = 8090
 app.listen(SERVER_PORT, () => {

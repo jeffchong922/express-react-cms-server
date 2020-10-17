@@ -1,14 +1,17 @@
 const departmentsDb = require('../data-access')
 
 const makeAddDepartment = require('./add-department')
-const MakeFetchDepartments = require('./fetch-departments')
+const makeFetchDepartments = require('./fetch-departments')
+const makeRemoveDepartment = require('./remove-department')
 
 const addDepartment = makeAddDepartment({ departmentsDb })
-const fetchDepartments = MakeFetchDepartments({ departmentsDb })
+const fetchDepartments = makeFetchDepartments({ departmentsDb })
+const removeDepartment = makeRemoveDepartment({ departmentsDb })
 
 const departmentService = Object.freeze({
   addDepartment,
-  fetchDepartments
+  fetchDepartments,
+  removeDepartment
 })
 
 module.exports = departmentService
