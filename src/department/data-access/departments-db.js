@@ -4,6 +4,7 @@ module.exports = function makeUsersDb ({ makeDb, colName }) {
   return Object.freeze({
     insert,
     remove,
+    update,
     findAll,
     findById,
     findByName
@@ -25,6 +26,15 @@ module.exports = function makeUsersDb ({ makeDb, colName }) {
   async function remove ({ id: _id }) {
     const db = await makeDb()
     const result = await db.collection(colName).deleteOne({ _id })
+    return result
+  }
+
+  async function update ({ id: _id, ...departmentInfo }) {
+    const db = await makeDb()
+    const result = await db.collection(colName).updateOne(
+      { _id },
+      { $set: { ...departmentInfo } }
+    )
     return result
   }
 
