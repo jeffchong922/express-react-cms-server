@@ -13,7 +13,9 @@ module.exports = function makeEditDepartments ({ departmentsDb }) {
     const belonger = department.getBelonger()
 
     // 避免部门名冲突
-    await throwWhenExist({ name: department.getName(), belongerId: belonger.getId() })
+    if (exist.name !== department.getName()) {
+      await throwWhenExist({ name: department.getName(), belongerId: belonger.getId() })
+    }
     
     return updateOne(department)
   }
