@@ -7,7 +7,9 @@ module.exports = function makeUsersDb ({ makeDb, colName }) {
     update,
     findAll,
     findById,
-    findByName
+    findByName,
+    removeMany,
+    findAllWithoutPage
   })
 
   async function insert ({ id: _id = Id.makeId(), ...departmentInfo }) {
@@ -26,6 +28,14 @@ module.exports = function makeUsersDb ({ makeDb, colName }) {
   async function remove ({ id: _id }) {
     const db = await makeDb()
     const result = await db.collection(colName).deleteOne({ _id })
+    return result
+  }
+
+  async function removeMany ({ idList }) {
+    const db = await makeDb()
+    const result = await db.collection(colName).deleteMany({
+      _id: { $in: idList }
+    })
     return result
   }
 
@@ -57,6 +67,37 @@ module.exports = function makeUsersDb ({ makeDb, colName }) {
 
     // 数据处理
     const list = result.slice(pageSize * (pageNumber - 1), pageSize * pageNumber).map(department => {
+      const { _id: id, ...departmentInfo } = department
+      return {
+        id,
+        ...departmentInfo
+      }
+    })
+    return {
+      list,
+      total
+    }
+  }
+
+  async function findAllWithoutPage ({ belongerId }) {
+    const db = await makeDb()
+    const query = {
+      'belonger.id': {
+        $eq: belongerId
+      }
+    }
+    const result = await db.collection(colName).find(query).toArray()
+    const total = result.length
+
+    if (total <= 0) {
+      return {
+        list: [],
+        total: 0
+      }
+    }
+
+    // 数据处理
+    const list = result.map(department => {
       const { _id: id, ...departmentInfo } = department
       return {
         id,

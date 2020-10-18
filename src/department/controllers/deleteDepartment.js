@@ -6,9 +6,18 @@ module.exports = function makeDeleteDepartments ({ removeDepartment }) {
       'Content-Type': 'application/json'
     }
     try {
-      const { departId } = httpRequest.query
+      const { total, ...deleteObjList } = httpRequest.query
+
+      // 获取待删除 id 列表
+      let deleteArray = []
+      if (+total > 0) {
+        deleteArray = Object.keys(deleteObjList)
+          .filter(key => /^depart\d$/.test(key))
+          .map(key => deleteObjList[key])
+      }
+
       const payload = httpRequest.tokenPayload
-      const mergeData = Object.assign({}, { id: departId }, { belonger: payload })
+      const mergeData = Object.assign({}, { deleteArray }, { belonger: payload })
       const deleted = await removeDepartment(mergeData)
       return {
         headers,

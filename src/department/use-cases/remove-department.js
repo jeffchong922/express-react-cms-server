@@ -2,24 +2,26 @@ const logger = require('../../helpers/logger');
 const makeBelonger = require('../../belonger');
 
 module.exports = function makeRemoveDepartments ({ departmentsDb }) {
-  return async function removeDepartments ({ belonger, id }) {
+  return async function removeDepartments ({ belonger, deleteArray }) {
     const validBelonger = makeBelonger(belonger)
 
-    if (!id) {
-      throw new Error('删除部门数据需要提供 departId 字段')
+    if (deleteArray.length <= 0) {
+      throw new Error('缺少删除部门数据需要的 depart\\d 字段')
     }
 
-    const departmentToDelete = await departmentsDb.findById({ id })
+    const { list: departmentList } = await departmentsDb.findAllWithoutPage({ belongerId: validBelonger.getId() })
+    const departmentIdList = getIdList(departmentList)
 
-    if (!departmentToDelete) {
+    if (departmentIdList.length <= 0) {
       return deleteNothing()
     }
 
-    if (!isBelongTo(departmentToDelete, validBelonger.getId())) {
+    const belongList = getBelongList(departmentIdList, deleteArray)
+    if (belongList.length <= 0) {
       return deleteNothing()
     }
 
-    return deleteOne(departmentToDelete)
+    return deleteMany(belongList)
   }
 
   function deleteNothing (message = '部门未找到') {
@@ -31,6 +33,24 @@ module.exports = function makeRemoveDepartments ({ departmentsDb }) {
 
   function isBelongTo (department, belongerId) {
     return department.belonger.id === belongerId
+  }
+
+  function getIdList (list) {
+    return list.map(item => item.id)
+  }
+
+  function getBelongList (departmentIdList, deleteArray) {
+    return deleteArray.filter(id => departmentIdList.includes(id))
+  }
+
+  async function deleteMany (idList) {
+    const deleted = await departmentsDb.removeMany({ idList })
+    logger.debug(`部门删除结果: ${JSON.stringify(deleted, null, 2)}`)
+    const { deletedCount: deleteCount } = deleted
+    return {
+      deleteCount,
+      message: `成功删除数据数目 ${deleteCount}`
+    }
   }
 
   async function deleteOne (department) {
