@@ -7,12 +7,12 @@ module.exports = function makeSignIn ({ fetchUser }) {
     }
     try {
       const userInfo = httpRequest.body
-      const token = await fetchUser(userInfo)
+      const fetched = await fetchUser(userInfo)
       return {
         headers,
         statusCode: 200,
         body: {
-          token
+          fetched
         }
       }
     } catch (e) {
