@@ -6,9 +6,9 @@ module.exports = function makeGetDepartments ({ fetchDepartments }) {
       'Content-Type': 'application/json'
     }
     try {
-      const { departId, pageNumber, pageSize } = httpRequest.query
+      const { departId, pageNumber, pageSize, searchName } = httpRequest.query
       const payload = httpRequest.tokenPayload
-      const mergeData = Object.assign({}, { id: departId, pageNumber, pageSize }, { belonger: payload })
+      const mergeData = Object.assign({}, { id: departId, pageNumber, pageSize, searchName }, { belonger: payload })
       const fetched = await fetchDepartments(mergeData)
       return {
         headers,

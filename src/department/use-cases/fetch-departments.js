@@ -2,7 +2,7 @@ const logger = require('../../helpers/logger');
 const makeBelonger = require('../../belonger');
 
 module.exports = function makeFetchDepartments ({ departmentsDb }) {
-  return async function fetchDepartments ({ belonger, id, pageNumber, pageSize }) {
+  return async function fetchDepartments ({ belonger, id, pageNumber, pageSize, searchName }) {
     const validBelonger = makeBelonger(belonger)
 
     if (id) {
@@ -25,7 +25,8 @@ module.exports = function makeFetchDepartments ({ departmentsDb }) {
     }
     pageNumber = parseInt(pageNumber) || 1
     pageSize = parseInt(pageSize) || 10
-    const departments = await departmentsDb.findAll({ belongerId: validBelonger.getId(), pageNumber, pageSize })
+    const searchNameReg = new RegExp(searchName ? searchName : '', 'ig')
+    const departments = await departmentsDb.findAll({ belongerId: validBelonger.getId(), pageNumber, pageSize, searchNameReg })
     logger.debug(`查询用户 ${validBelonger.getUsername()} 部门结果: ${JSON.stringify(departments, null, 2)}`)
 
     return departments

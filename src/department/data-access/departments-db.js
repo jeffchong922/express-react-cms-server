@@ -48,9 +48,10 @@ module.exports = function makeUsersDb ({ makeDb, colName }) {
     return result
   }
 
-  async function findAll ({ belongerId, pageNumber, pageSize }) {
+  async function findAll ({ belongerId, pageNumber, pageSize, searchNameReg }) {
     const db = await makeDb()
     const query = {
+      'name': searchNameReg,
       'belonger.id': {
         $eq: belongerId
       }
