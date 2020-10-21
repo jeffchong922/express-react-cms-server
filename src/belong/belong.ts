@@ -4,7 +4,7 @@ interface BuildMakeBelongProps {
   Id: IdType
 }
 
-interface MakeBelongProps {
+export interface MakeBelongProps {
   id: string
   username: string
 }

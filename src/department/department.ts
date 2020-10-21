@@ -1,14 +1,32 @@
-module.exports = function buildMakeDepartment ({
-  Id, makeBelonger
-}) {
+import { MakeBelongType } from "../belong"
+import { MakeBelongProps } from '../belong/belong'
+import { IdType } from "../helpers/id"
+
+interface BuildMakeDepartmentProps {
+  Id: IdType
+  makeBelong: MakeBelongType
+}
+
+interface MakeDepartmentProps {
+  id?: string
+  name: string
+  memberCount?: number
+  status?: boolean
+  introduction: string
+  belong: MakeBelongProps
+}
+
+export default function buildMakeDepartment ({
+  Id, makeBelong
+}: BuildMakeDepartmentProps) {
   return function makeDepartment ({
     id = Id.makeId(),
     name,
     memberCount = 0,
     status = true,
     introduction,
-    belonger
-  }) {
+    belong
+  }: MakeDepartmentProps) {
     
     if (!Id.isValidId(id)) {
       throw new Error('部门数据不具备有效 id')
@@ -30,12 +48,12 @@ module.exports = function buildMakeDepartment ({
       throw new Error('部门数据缺少 introduction 字段')
     }
 
-    const validBelonger = makeBelonger(belonger)
+    const validBelong = makeBelong(belong)
     
     return Object.freeze({
       getIntroduction: () => introduction,
       getMemberCount: () => memberCount,
-      getBelonger: () => validBelonger,
+      getBelong: () => validBelong,
       getStatus: () => status,
       getName: () => name,
       getId: () => id
