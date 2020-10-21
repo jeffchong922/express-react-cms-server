@@ -1,5 +1,16 @@
-module.exports = function buildMakeBelonger ({ Id }) {
-  return function makeBelonger ({ id, username }) {
+import { IdType } from "../helpers/id"
+
+interface BuildMakeBelongProps {
+  Id: IdType
+}
+
+interface MakeBelongProps {
+  id: string
+  username: string
+}
+
+export default function buildMakeBelong ({ Id }: BuildMakeBelongProps) {
+  return function makeBelong ({ id, username }: MakeBelongProps) {
     if (!id) {
       throw new Error('所属者数据缺少 id 字段')
     }
