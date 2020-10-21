@@ -1,7 +1,13 @@
-const logger = require("../../helpers/logger")
+import { HttpRequest, HttpResponse } from "../../helpers/express-callback"
+import logger from "../../helpers/logger"
+import { AddUserType } from "../use-cases"
 
-module.exports = function makeSignUp ({ addUser }) {
-  return async function signUp (httpRequest) {
+interface MakeSignUpProps {
+  addUser: AddUserType
+}
+
+export default function makeSignUp ({ addUser }: MakeSignUpProps) {
+  return async function signUp (httpRequest: HttpRequest): Promise<HttpResponse> {
     const headers = {
       'Content-Type': 'application/json'
     }

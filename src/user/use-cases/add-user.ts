@@ -1,14 +1,23 @@
-const logger = require('../../helpers/logger');
-const makeUser = require('../index');
+import makeUser from "..";
+import { MakeUserProps } from '../user'
+import logger from "../../helpers/logger";
+import { UsersDbType } from "../data-access";
 
-module.exports = function makeAddUser ({ usersDb }) {
-  return async function addUser (userInfo) {
+interface MakeAddUserProps {
+  usersDb: UsersDbType
+}
+
+interface AddUserInfo extends MakeUserProps {
+}
+
+export default function makeAddUser ({ usersDb }: MakeAddUserProps) {
+  return async function addUser (userInfo: AddUserInfo) {
     const user = makeUser(userInfo)
 
     const exist = await usersDb.findByName({ username: user.getUsername() })
     if (exist) {
       const error = new Error('用户已注册')
-      error.statusCode = 409
+      // error.statusCode = 409
       throw error
     }
 

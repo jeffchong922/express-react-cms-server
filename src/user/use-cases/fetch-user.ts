@@ -1,5 +1,21 @@
-module.exports = function makeFetchUser ({ usersDb, Encrypt, Token }) {
-  return async function fetchUser ({ username, password, token }) {
+import { EncryptType } from "../../helpers/encrypt"
+import { TokenType } from "../../helpers/token"
+import { UsersDbType } from "../data-access"
+
+interface MakeFetchUserProps {
+  usersDb: UsersDbType
+  Encrypt: EncryptType
+  Token: TokenType
+}
+
+interface FetchUserProps {
+  username: string
+  password: string
+  token: string
+}
+
+export default function makeFetchUser ({ usersDb, Encrypt, Token }: MakeFetchUserProps) {
+  return async function fetchUser ({ username, password, token }: FetchUserProps) {
 
     if (token) {
       return fetchByToken(token)
@@ -35,7 +51,7 @@ module.exports = function makeFetchUser ({ usersDb, Encrypt, Token }) {
     }
   }
 
-  async function fetchByToken (token) {
+  async function fetchByToken (token: string) {
     const { username } = Token.getPayload(token)
     
     const user = await usersDb.findByName({ username })

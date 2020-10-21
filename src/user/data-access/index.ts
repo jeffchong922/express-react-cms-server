@@ -1,5 +1,5 @@
-const makeUsersDb = require('./users-db')
-const buildMakeDb = require('../../db/mongo-db')
+import makeUsersDb from './users-db'
+import buildMakeDb from '../../db/mongo-db'
 
 const dbUrl = 'mongodb://localhost:27017',
       dbName = 'react-cms',
@@ -12,4 +12,6 @@ const makeDb = buildMakeDb({
 
 const usersDb = makeUsersDb({ makeDb, colName })
 
-module.exports = usersDb
+export type UsersDbType = typeof usersDb
+
+export default usersDb
