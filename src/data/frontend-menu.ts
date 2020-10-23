@@ -2,7 +2,8 @@ export default Object.freeze([
   {
     "icon": "DashboardOutlined",
     "title": "控制台",
-    "key": "/dashboard"
+    "key": "/dashboard",
+    "component": "DashboardView"
   },
   {
     "icon": "UserOutlined",
@@ -12,12 +13,14 @@ export default Object.freeze([
       {
         "icon": "UserAddOutlined",
         "title": "添加用户",
-        "key": "/user/add"
+        "key": "/user/add",
+        "component": "UserAddView"
       },
       {
         "icon": "UnorderedListOutlined",
         "title": "用户列表",
-        "key": "/user/list"
+        "key": "/user/list",
+        "component": "UserListView"
       }
     ]
   },
@@ -29,23 +32,27 @@ export default Object.freeze([
       {
         "icon": "AppstoreAddOutlined",
         "title": "添加部门",
-        "key": "/department/add"
+        "key": "/department/add",
+        "component": "DepartmentAddView"
       },
       {
         "icon": "UnorderedListOutlined",
         "title": "部门列表",
-        "key": "/department/list"
+        "key": "/department/list",
+        "component": "DepartmentListView"
       }
     ]
   },
   {
     "icon": "CoffeeOutlined",
     "title": "请假",
-    "key": "/take-off"
+    "key": "/take-off",
+    "component": "TakeOffView"
   },
   {
     "icon": "CompressOutlined",
     "title": "加班",
-    "key": "/overtime"
+    "key": "/overtime",
+    "component": "OvertimeView"
   }
 ])
