@@ -1,14 +1,16 @@
-const logger = require("../../helpers/logger")
+import logger from "../../helpers/logger"
+import { MakeGetDepartmentsProps } from "./types"
+import { HttpRequest, HttpResponse } from "../../helpers/express-callback"
 
-module.exports = function makeGetDepartments ({ fetchDepartments }) {
-  return async function getDepartments (httpRequest) {
+export default function makeGetDepartments ({ fetchDepartments }: MakeGetDepartmentsProps) {
+  return async function getDepartments (httpRequest: HttpRequest): Promise<HttpResponse> {
     const headers = {
       'Content-Type': 'application/json'
     }
     try {
       const { departId, pageNumber, pageSize, searchName } = httpRequest.query
       const payload = httpRequest.tokenPayload
-      const mergeData = Object.assign({}, { id: departId, pageNumber, pageSize, searchName }, { belonger: payload })
+      const mergeData = Object.assign({}, { id: departId, pageNumber, pageSize, searchName }, { belong: payload })
       const fetched = await fetchDepartments(mergeData)
       return {
         headers,

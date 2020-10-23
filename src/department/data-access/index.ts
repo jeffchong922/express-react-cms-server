@@ -12,6 +12,6 @@ const makeDb = buildMakeDb({
 
 const departmentsDb = makeDepartmentsDb({ makeDb, colName })
 
-export type DepartmentsDbType = typeof departmentsDb
+export type DepartmentsDb = typeof departmentsDb
 
 export default departmentsDb

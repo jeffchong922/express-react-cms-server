@@ -1,14 +1,16 @@
-const logger = require("../../helpers/logger")
+import logger from "../../helpers/logger"
+import { MakePutDepartmentProps } from "./types"
+import { HttpRequest, HttpResponse } from "../../helpers/express-callback"
 
-module.exports = function makePutDepartment ({ editDepartment }) {
-  return async function putDepartment (httpRequest) {
+export default function makePutDepartment ({ editDepartment }: MakePutDepartmentProps) {
+  return async function putDepartment (httpRequest: HttpRequest): Promise<HttpResponse> {
     const headers = {
       'Content-Type': 'application/json'
     }
     try {
       const departmentInfo = httpRequest.body
       const payload = httpRequest.tokenPayload
-      const mergeData = Object.assign({}, departmentInfo, { belonger: payload })
+      const mergeData = Object.assign({}, departmentInfo, { belong: payload })
       const updated = await editDepartment(mergeData)
       return {
         headers,

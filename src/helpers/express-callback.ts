@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import { ParamsDictionary } from 'express-serve-static-core'
 import { TokenType, Payload } from './token'
 
 import logger from './logger'
@@ -6,8 +7,8 @@ import logger from './logger'
 export interface HttpRequest {
   body: any
   query: any
-  params: any
-  method: any
+  params: ParamsDictionary
+  method: string
   path: string
   tokenPayload: Payload | undefined
   headers: {

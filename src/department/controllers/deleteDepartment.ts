@@ -1,15 +1,17 @@
-const logger = require("../../helpers/logger")
+import logger from "../../helpers/logger"
+import { MakeDeleteDepartmentsProps } from "./types"
+import { HttpRequest, HttpResponse } from "../../helpers/express-callback"
 
-module.exports = function makeDeleteDepartments ({ removeDepartment }) {
-  return async function deleteDepartments (httpRequest) {
+export default function makeDeleteDepartments ({ removeDepartments }: MakeDeleteDepartmentsProps) {
+  return async function deleteDepartments (httpRequest: HttpRequest): Promise<HttpResponse> {
     const headers = {
       'Content-Type': 'application/json'
     }
     try {
-      const { total, ...deleteObjList } = httpRequest.query
+      const { total = 0, ...deleteObjList } = httpRequest.query
 
       // 获取待删除 id 列表
-      let deleteArray = []
+      let deleteArray: string[] = []
       if (+total > 0) {
         deleteArray = Object.keys(deleteObjList)
           .filter(key => /^depart\d$/.test(key))
@@ -17,8 +19,8 @@ module.exports = function makeDeleteDepartments ({ removeDepartment }) {
       }
 
       const payload = httpRequest.tokenPayload
-      const mergeData = Object.assign({}, { deleteArray }, { belonger: payload })
-      const deleted = await removeDepartment(mergeData)
+      const mergeData = Object.assign({}, { deleteArray }, { belong: payload })
+      const deleted = await removeDepartments(mergeData)
       return {
         headers,
         statusCode: 200,
