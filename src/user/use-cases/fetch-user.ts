@@ -1,6 +1,8 @@
+import frontendMenu from "../../data/frontend-menu"
 import { EncryptType } from "../../helpers/encrypt"
 import { TokenType } from "../../helpers/token"
 import { UsersDbType } from "../data-access"
+
 
 interface MakeFetchUserProps {
   usersDb: UsersDbType
@@ -47,7 +49,8 @@ export default function makeFetchUser ({ usersDb, Encrypt, Token }: MakeFetchUse
     return {
       token: userToken,
       id: user.id,
-      username: user.username
+      username: user.username,
+      userMenu: frontendMenu
     }
   }
 
@@ -62,7 +65,8 @@ export default function makeFetchUser ({ usersDb, Encrypt, Token }: MakeFetchUse
     return {
       token,
       id: user.id,
-      username: user.username
+      username: user.username,
+      userMenu: frontendMenu
     }
   }
 }
