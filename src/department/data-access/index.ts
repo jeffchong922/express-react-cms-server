@@ -1,16 +1,13 @@
 import buildMakeDb from "../../db/mongo-db"
 import makeDepartmentsDb from './departments-db'
-
-const dbUrl = 'mongodb://localhost:27017',
-      dbName = 'react-cms',
-      colName = 'department'
+import { DEPARTMENTS_DB_COL_NAME, DEPARTMENTS_DB_NAME, DEPARTMENTS_DB_URL } from "../../db/secrets"
 
 const makeDb = buildMakeDb({
-  dbUrl,
-  dbName
+  dbUrl: DEPARTMENTS_DB_URL,
+  dbName: DEPARTMENTS_DB_NAME
 })
 
-const departmentsDb = makeDepartmentsDb({ makeDb, colName })
+const departmentsDb = makeDepartmentsDb({ makeDb, colName: DEPARTMENTS_DB_COL_NAME })
 
 export type DepartmentsDb = typeof departmentsDb
 

@@ -1,16 +1,13 @@
 import makeUsersDb from './users-db'
 import buildMakeDb from '../../db/mongo-db'
-
-const dbUrl = 'mongodb://localhost:27017',
-      dbName = 'react-cms',
-      colName = 'users'
+import { USERS_DB_URL, USERS_DB_NAME, USERS_DB_COL_NAME } from '../../db/secrets'
 
 const makeDb = buildMakeDb({
-  dbUrl,
-  dbName
+  dbUrl: USERS_DB_URL,
+  dbName: USERS_DB_NAME
 })
 
-const usersDb = makeUsersDb({ makeDb, colName })
+const usersDb = makeUsersDb({ makeDb, colName: USERS_DB_COL_NAME })
 
 export type UsersDbType = typeof usersDb
 
