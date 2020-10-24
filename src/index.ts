@@ -2,6 +2,7 @@ import cors from 'cors'
 import express from 'express'
 import bodyParser from 'body-parser'
 import compression from 'compression'
+import { SERVER_PORT } from './db/secrets'
 
 import userControllers from './user/controllers'
 import makeExpressCallback from './helpers/express-callback'
@@ -24,7 +25,6 @@ app.get('/departments', makeExpressCallback(departmentControllers.getDepartments
 app.delete('/departments', makeExpressCallback(departmentControllers.deleteDepartment, Token))
 app.put('/departments', makeExpressCallback(departmentControllers.putDepartment, Token))
 
-const SERVER_PORT = 8090
 app.listen(SERVER_PORT, () => {
   console.log(`服务器运行地址：http://localhost:${SERVER_PORT}`)
 })
