@@ -1,3 +1,4 @@
+import { FilterQuery } from "mongodb";
 import Id from "../../helpers/id";
 import { FindByNameProps, InsertProps, MakePositionsDbProps, PositionSchema } from "./types";
 
@@ -7,10 +8,11 @@ export default function makePositionsDb ({ makeDb, colName }: MakePositionsDbPro
     insert
   })
 
-  async function findByName ({ name, belongId }: FindByNameProps) {
+  async function findByName ({ name, belongId, departmentId }: FindByNameProps) {
     const db = await makeDb()
-    const query = {
+    const query: FilterQuery<PositionSchema> = {
       name,
+      departmentId,
       'belong.id': {
         $eq: belongId
       }

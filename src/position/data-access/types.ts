@@ -22,6 +22,7 @@ export interface MakePositionsDbProps {
 
 export interface FindByNameProps {
   name: string
+  departmentId: string
   belongId: string
 }
 

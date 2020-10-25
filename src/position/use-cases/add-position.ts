@@ -10,6 +10,7 @@ export default function makeAddPosition ({ positionsDb, findExistName }: MakeAdd
     await findExistName<ReturnType<typeof positionsDb.findByName>>({
       name: position.getName(),
       belongId: belong.getId(),
+      departmentId: position.getDepartmentId(),
       whenExistThrow: true,
       whenNotFoundThrow: false,
       dbInstance: positionsDb
