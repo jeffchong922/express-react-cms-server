@@ -8,7 +8,6 @@ export default function makeAddDepartment ({ departmentsDb }: MakeAddDepartmentP
     const belong = department.getBelong()
 
     const exist = await departmentsDb.findByName({ name: department.getName(), belongId: belong.getId() })
-    console.log(exist, '----------------', belong.getId())
     if (exist) {
       const error: any = new Error('部门已注册')
       error.statusCode = 409
