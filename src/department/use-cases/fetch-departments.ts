@@ -3,7 +3,7 @@ import logger from "../../helpers/logger"
 import { FetchDepartmentsProps, MakeFetchDepartmentsProps } from "./types"
 
 export default function makeFetchDepartments ({ departmentsDb }: MakeFetchDepartmentsProps) {
-  return async function fetchDepartments ({ belong, id, pageNumber, pageSize, searchName }: FetchDepartmentsProps) {
+  return async function fetchDepartments ({ belong, id, pageNumber, pageSize, searchName, nameOnly }: FetchDepartmentsProps) {
     const validBelong = makeBelong(belong || {})
 
     if (id) {
@@ -21,6 +21,10 @@ export default function makeFetchDepartments ({ departmentsDb }: MakeFetchDepart
       }
     }
 
+    if (nameOnly === 'true') {
+      return getNameOnly(validBelong)
+    }
+
     if (!pageNumber || !pageSize) {
       throw new Error('请携带 pageNumber 和 pageSize 查询条件')
     }
@@ -31,5 +35,17 @@ export default function makeFetchDepartments ({ departmentsDb }: MakeFetchDepart
     logger.debug(`查询用户 ${validBelong.getUsername()} 部门结果: ${JSON.stringify(departments, null, 2)}`)
 
     return departments
+  }
+
+  async function getNameOnly (belong: ReturnType<typeof makeBelong>) {
+    const departments = await departmentsDb.findAllWithoutPage({ belongId: belong.getId() })
+    const nameList = departments.list.map(department => ({
+      id: department.id,
+      name: department.name
+    }))
+    return {
+      list: nameList,
+      total: departments.total
+    }
   }
 }

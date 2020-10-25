@@ -8,9 +8,9 @@ export default function makeGetDepartments ({ fetchDepartments }: MakeGetDepartm
       'Content-Type': 'application/json'
     }
     try {
-      const { departId, pageNumber, pageSize, searchName } = httpRequest.query
+      const { departId, pageNumber, pageSize, searchName, nameOnly } = httpRequest.query
       const payload = httpRequest.tokenPayload
-      const mergeData = Object.assign({}, { id: departId, pageNumber, pageSize, searchName }, { belong: payload })
+      const mergeData = Object.assign({}, { id: departId, pageNumber, pageSize, searchName, nameOnly }, { belong: payload })
       const fetched = await fetchDepartments(mergeData)
       return {
         headers,

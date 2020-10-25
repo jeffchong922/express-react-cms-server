@@ -22,6 +22,7 @@ export interface FetchDepartmentsProps {
   pageNumber?: string
   pageSize?: string
   searchName?: string
+  nameOnly?: string
 }
 
 export type MakeRemoveDepartmentsProps = IncludeDb
