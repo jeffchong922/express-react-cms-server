@@ -29,3 +29,14 @@ export interface FindByNameProps {
 export type InsertProps = BaseInfo & {
   id?: string
 }
+
+export interface FindByIdProps {
+  id: string
+  belongId: string
+}
+
+export interface FindByFilterProps {
+  belongId: string
+  departmentIds: string[]
+  searchName: RegExp
+}

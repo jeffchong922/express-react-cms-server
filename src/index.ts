@@ -27,6 +27,7 @@ app.delete('/departments', makeExpressCallback(departmentControllers.deleteDepar
 app.put('/departments', makeExpressCallback(departmentControllers.putDepartment, Token))
 
 app.post('/positions', makeExpressCallback(positionControllers.postPosition, Token))
+app.get('/positions', makeExpressCallback(positionControllers.getPositions, Token))
 
 app.listen(SERVER_PORT, () => {
   console.log(`服务器运行地址：http://localhost:${SERVER_PORT}`)
