@@ -1,6 +1,6 @@
 import buildMakeDb from "../../db/mongo-db";
 import makePositionsDb from "./positions-db";
-import { POSITIONS_DB_COL_NAME, POSITIONS_DB_NAME, POSITIONS_DB_URL } from "../../db/secrets";
+import { POSITIONS_DB_COL_NAME, POSITIONS_DB_NAME, POSITIONS_DB_URL } from "../../data/secrets";
 
 const makeDb = buildMakeDb({
   dbUrl: POSITIONS_DB_URL,

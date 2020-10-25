@@ -1,6 +1,6 @@
 import makeUsersDb from './users-db'
 import buildMakeDb from '../../db/mongo-db'
-import { USERS_DB_URL, USERS_DB_NAME, USERS_DB_COL_NAME } from '../../db/secrets'
+import { USERS_DB_URL, USERS_DB_NAME, USERS_DB_COL_NAME } from '../../data/secrets'
 
 const makeDb = buildMakeDb({
   dbUrl: USERS_DB_URL,

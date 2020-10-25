@@ -2,7 +2,7 @@ import cors from 'cors'
 import express from 'express'
 import bodyParser from 'body-parser'
 import compression from 'compression'
-import { SERVER_PORT } from './db/secrets'
+import { SERVER_PORT } from './data/secrets'
 
 import userControllers from './user/controllers'
 import makeExpressCallback from './helpers/express-callback'
