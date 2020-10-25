@@ -44,6 +44,25 @@ export default Object.freeze([
     ]
   },
   {
+    "icon": "ClusterOutlined",
+    "title": "职位管理",
+    "key": "/position",
+    "child": [
+      {
+        "icon": "AppstoreAddOutlined",
+        "title": "添加职位",
+        "key": "/position/add",
+        "component": "PositionAddView"
+      },
+      {
+        "icon": "UnorderedListOutlined",
+        "title": "职位列表",
+        "key": "/position/list",
+        "component": "PositionListView"
+      }
+    ]
+  },
+  {
     "icon": "CoffeeOutlined",
     "title": "请假",
     "key": "/take-off",
