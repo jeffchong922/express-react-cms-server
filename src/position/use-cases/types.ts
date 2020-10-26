@@ -46,6 +46,13 @@ export type MakeEditPositionProps = IncludeDb & {
 
 export type EditPositionProps = MakePositionProps
 
+export type MakeRemovePositionsProps = IncludeDb
+
+export type RemovePositionsProps = {
+  belong?: MakeBelongProps
+  deleteArray?: string[]
+}
+
 export type FindExistName = <T>(props: FindExistNameProps<T>) => Promise<T>
 
 export interface FindExistNameProps<T> {

@@ -46,3 +46,7 @@ export type UpdateProps = {
 } & {
   [prop in keyof BaseInfo]?: BaseInfo[prop]
 }
+
+export type RemoveManyProps = {
+  idList: string[]
+}

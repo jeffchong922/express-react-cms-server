@@ -1,6 +1,6 @@
 import { FilterQuery } from "mongodb";
 import Id from "../../helpers/id";
-import { FindByFilterProps, FindByIdProps, FindByNameProps, InsertProps, MakePositionsDbProps, PositionSchema, UpdateProps } from "./types";
+import { FindByFilterProps, FindByIdProps, FindByNameProps, InsertProps, MakePositionsDbProps, PositionSchema, RemoveManyProps, UpdateProps } from "./types";
 
 export default function makePositionsDb ({ makeDb, colName }: MakePositionsDbProps) {
   return Object.freeze({
@@ -8,7 +8,8 @@ export default function makePositionsDb ({ makeDb, colName }: MakePositionsDbPro
     insert,
     findById,
     findByFilter,
-    update
+    update,
+    removeMany
   })
 
   async function findByName ({ name, belongId, departmentId }: FindByNameProps) {
@@ -104,6 +105,14 @@ export default function makePositionsDb ({ makeDb, colName }: MakePositionsDbPro
       { _id },
       { $set: { ...positionInfo }}
     )
+    return result
+  }
+
+  async function removeMany ({ idList }: RemoveManyProps) {
+    const db = await makeDb()
+    const result = await db.collection<PositionSchema>(colName).deleteMany({
+      _id: { $in: idList }
+    })
     return result
   }
 }

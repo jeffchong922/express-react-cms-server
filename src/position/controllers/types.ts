@@ -11,3 +11,7 @@ export interface MakeGetPositionsProps {
 export interface MakePutPositionProps {
   editPosition: PositionServices['editPosition']
 }
+
+export interface MakeDeletePositionsProps {
+  removePositions: PositionServices['removePositions']
+}
