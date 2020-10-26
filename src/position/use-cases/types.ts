@@ -39,6 +39,15 @@ export interface FetchPositionsResult {
   }>
 }
 
+export type MakeEditPositionProps = IncludeDb & {
+  findExistId: FindExistId
+  findExistName: FindExistName
+}
+
+export type EditPositionProps = MakePositionProps
+
+export type FindExistName = <T>(props: FindExistNameProps<T>) => Promise<T>
+
 export interface FindExistNameProps<T> {
   name: string
   belongId: string
@@ -49,6 +58,8 @@ export interface FindExistNameProps<T> {
     findByName: (props: { name: string, belongId: string, departmentId: string }) => T
   }
 }
+
+export type FindExistId = <T>(props: FindExistIdProps<T>) => Promise<T>
 
 export interface FindExistIdProps<T> {
   id: string

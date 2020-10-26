@@ -1,13 +1,14 @@
 import { FilterQuery } from "mongodb";
 import Id from "../../helpers/id";
-import { FindByFilterProps, FindByIdProps, FindByNameProps, InsertProps, MakePositionsDbProps, PositionSchema } from "./types";
+import { FindByFilterProps, FindByIdProps, FindByNameProps, InsertProps, MakePositionsDbProps, PositionSchema, UpdateProps } from "./types";
 
 export default function makePositionsDb ({ makeDb, colName }: MakePositionsDbProps) {
   return Object.freeze({
     findByName,
     insert,
     findById,
-    findByFilter
+    findByFilter,
+    update
   })
 
   async function findByName ({ name, belongId, departmentId }: FindByNameProps) {
@@ -46,7 +47,7 @@ export default function makePositionsDb ({ makeDb, colName }: MakePositionsDbPro
   async function findById ({ id: _id, belongId }: FindByIdProps) {
     const db = await makeDb()
     const query: FilterQuery<PositionSchema> = {
-      name,
+      _id,
       'belong.id': {
         $eq: belongId
       }
@@ -95,5 +96,14 @@ export default function makePositionsDb ({ makeDb, colName }: MakePositionsDbPro
       list,
       total
     }
+  }
+
+  async function update ({ id: _id, ...positionInfo }: UpdateProps) {
+    const db = await makeDb()
+    const result = await db.collection<PositionSchema>(colName).updateOne(
+      { _id },
+      { $set: { ...positionInfo }}
+    )
+    return result
   }
 }

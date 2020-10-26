@@ -4,7 +4,7 @@ export default async function findExistName<T> ({ name, belongId, departmentId, 
   const exist = await dbInstance.findByName({ name, belongId, departmentId })
   if ((exist && whenExistThrow) || (!exist && whenNotFoundThrow)) {
     const error: any = new Error(exist ? '所添加的数据已存在' : '所查询的数据不存在')
-    error.status = exist ? 409 : 404
+    error.statusCode = exist ? 409 : 404
     throw error
   }
   return exist

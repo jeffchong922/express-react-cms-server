@@ -7,3 +7,7 @@ export interface MakePostPositionProps {
 export interface MakeGetPositionsProps {
   fetchPositions: PositionServices['fetchPositions']
 }
+
+export interface MakePutPositionProps {
+  editPosition: PositionServices['editPosition']
+}

@@ -40,3 +40,9 @@ export interface FindByFilterProps {
   departmentIds: string[]
   searchName: RegExp
 }
+
+export type UpdateProps = {
+  id: string
+} & {
+  [prop in keyof BaseInfo]?: BaseInfo[prop]
+}
