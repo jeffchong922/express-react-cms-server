@@ -16,7 +16,6 @@ export default function makeRemovePositions ({ positionsDb }: MakeRemovePosition
       searchName: new RegExp('', 'ig')
     })
     const positionIdList = getIdList(positionList)
-    console.log('----', positionList)
     if (positionIdList.length <= 0) {
       return deleteNothing()
     }

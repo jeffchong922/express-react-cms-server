@@ -8,7 +8,6 @@ export function makeFetchPositions ({ positionsDb,  findExistId, departmentsDb }
     const { list: departments } = await departmentsDb.findAllWithoutPage({ belongId: validBelong.getId() })
 
     if (id) {
-      console.log(id, '-------')
       const exist = await findExistId({
         id,
         belongId: validBelong.getId(),
@@ -16,8 +15,7 @@ export function makeFetchPositions ({ positionsDb,  findExistId, departmentsDb }
         whenExistThrow: false,
         whenNotFoundThrow: true
       })
-      console.log(id, '-------', exist)
-      
+  
       const departmentName = findDepartmentNameById(departments, exist!.departmentId)
       return {
         list: [{
