@@ -9,6 +9,7 @@ import makeExpressCallback from './helpers/express-callback'
 import departmentControllers from './department/controllers'
 import positionControllers from './position/controllers'
 import Token from './helpers/token'
+import undoMenu from './data/undo-menu'
 
 const app = express()
 app.disable('x-powered-by')
@@ -30,6 +31,12 @@ app.post('/positions', makeExpressCallback(positionControllers.postPosition, Tok
 app.get('/positions', makeExpressCallback(positionControllers.getPositions, Token))
 app.put('/positions', makeExpressCallback(positionControllers.putPosition, Token))
 app.delete('/positions', makeExpressCallback(positionControllers.deletePositions, Token))
+
+app.get('/undo-menus', (req, res) => {
+  res.json({
+    menu: undoMenu
+  })
+})
 
 app.listen(SERVER_PORT, () => {
   console.log(`服务器运行地址：http://localhost:${SERVER_PORT}`)
