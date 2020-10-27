@@ -9,6 +9,7 @@ export interface IncludeDb {
 
 export type MakeAddPositionProps = IncludeDb & {
   findExistName: <T>(props: FindExistNameProps<T>) => Promise<T>
+  departmentsDb: DepartmentsDb
 }
 
 export type AddPositionProps = MakePositionProps

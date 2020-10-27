@@ -7,7 +7,7 @@ import findExistId from "./find-exist-id";
 import findExistName from "./find-exist-name";
 import makeRemovePositions from "./remove-positions";
 
-const addPosition = makeAddPosition({ positionsDb, findExistName })
+const addPosition = makeAddPosition({ positionsDb, findExistName, departmentsDb })
 const fetchPositions = makeFetchPositions({ positionsDb, findExistId, departmentsDb })
 const editPosition = makeEditPosition({ positionsDb, findExistId, findExistName })
 const removePositions = makeRemovePositions({ positionsDb })
